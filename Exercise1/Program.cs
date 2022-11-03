@@ -13,64 +13,83 @@
     Console.WriteLine() for each loop.
 */
 
+using Exercise1.Helpers;
+using Exercise1.Helpers.MenuHelpers;
+
 namespace Exercise1
 {
     internal class Program
     {
-        //public class employees
-        //{
-            static void Main(string[] args)
+
+
+       static PayRoll payRoll = new PayRoll();
+        static void Main(string[] args)
+        {
+            
+
+
+            SeedData();
+
+            do
             {
-                string[] employees = new string[] { };
+                ShowMainMenu();
+                string input = Console.ReadLine()!;
 
-
-                Console.WriteLine("Enter name: ");
-                string name = Console.ReadLine();
-                Console.WriteLine("Enter salary: ");
-                string salary = Console.ReadLine();
-                string employee = String.Concat(name, " ", salary);
-                employees = employees.Concat(new string[] { employee }).ToArray();
-                Console.WriteLine(employees.ToString());
-                /*
-                bool showMenu = true;
-                while (showMenu)
+                switch (input)
                 {
-                    showMenu = Menu();
-                }*/
+                    case MenuHelpers.Add:
+                        AddEmployee();
+                        break;
+                    case MenuHelpers.Print:
+                        PrintEmployees();
+                        break;
+                    case MenuHelpers.Quit:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        break;
+                }
+
+            } while (true);
+
+        }
+
+        private static void AddEmployee()
+        {
+            string name = Util.AskForString("Name");
+            uint salary = Util.AskForUInt("Salary");
+
+            payRoll.AddEmployee(name,salary);
+            
+            //Create new employee
+        }
+
+        private static void PrintEmployees()
+        {
+            List<Employee> employees = payRoll.GetEmployees();
+
+            foreach(Employee employee in employees)
+            {
+                Console.WriteLine(employee);
                 
             }
-        /*
-            private static bool Menu()
-            {
-                Console.WriteLine("Choose an option: ");
-                Console.WriteLine("1. See the register");
-                Console.WriteLine("2. Add Employee");  
-                Console.WriteLine("3. Exit");
+        }
 
-                string name = "";
-                string salary = "";
+        private static void ShowMainMenu()
+        {
+            Console.WriteLine($"{MenuHelpers.Add}. Add employee");
+            Console.WriteLine($"{MenuHelpers.Print}. Show employees");
+            Console.WriteLine($"{MenuHelpers.Quit}. Quit");
+        }
 
-                switch (Console.ReadLine())
-                {
-                    case "1":
-                        Console.WriteLine("Employees register: ");
-                        Console.WriteLine("{0} : {1}", name, salary);
-                        return true;
-                    case "2":
-                        Console.WriteLine("Enter name: ");
-                        name = Console.ReadLine();
-                        Console.WriteLine("Enter salary: ");
-                        salary = Console.ReadLine();
-                        Console.WriteLine("Added {0} with {1} kr salary to the register!", name, salary);
-
-                        return true;
-                    case "3":
-                        return false;
-                    default:
-                        return true;
-                }
-            }*/
-        //}
-       
+        private static void SeedData()
+        {
+            payRoll.AddEmployee("Anna", 36000);
+            payRoll.AddEmployee("Bengt", 30000);
+            payRoll.AddEmployee("Pelle", 4000);
+            payRoll.AddEmployee("Lars", 60000);
+            payRoll.AddEmployee("Karl", 3000);
+            payRoll.AddEmployee("Tim", 35000);
+        }
     }
 }
