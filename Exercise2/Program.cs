@@ -11,10 +11,9 @@ namespace Exercise2
             {
                 Console.WriteLine("Main Menu:\n" +
                     "0. Quit\n" +
-                    "1. Cinema ticket 1 person\n" +
-                    "2. Cinema ticket several people\n" +
-                    "3. Repeat 10 times\n" +
-                    "4. The third word");
+                    "1. Cinema ticket(s)\n" +
+                    "2. Repeat 10 times\n" +
+                    "3. The third word");
 
                 switch (Console.ReadLine())
                 {
@@ -22,10 +21,9 @@ namespace Exercise2
                         showMenu = false;
                         break;
                     case "1":
-                        CinemaOnePersonCost();
+                        TotalCostTickets();
                         break;
                     case "2":
-                        CinemaSeveralPeopleCost();
                         break;
                     case "3":
                         break;
@@ -38,44 +36,85 @@ namespace Exercise2
             } while (showMenu);
         }
 
-        private static void CinemaSeveralPeopleCost()
+        private static void TotalCostTickets()
         {
             bool notSuccessful = true;
             string inputAmountOfPeople;
-            int totalCost;
+            int totalCost = 0;
+            int price = 0;
+            int juniorTickets = 0;
+            int standardTickets = 0;
+            int seniorTickets = 0;
             
             do
             {
-                Console.WriteLine("How many of you?");
-                inputAmountOfPeople = Console.ReadLine();
+                Console.WriteLine("How many tickets?");
+                inputAmountOfPeople = Console.ReadLine()!;
                
+                //See if its a number
                 if (int.TryParse(inputAmountOfPeople, out int amountOfPeople))
                 {
-                    //for loop
+                    notSuccessful = false;
+
+                    //Repeat loop for every person to calculate and add all their costs
+                    for (int i = 0; i < amountOfPeople; i++)
+                    {
+                        price = SingleTicket();
+                        totalCost += price;
+
+                        switch (price)
+                        {
+                            case 80:
+                                juniorTickets++;
+                                break;
+                            case 90:
+                                seniorTickets++;
+                                break;
+                            default:
+                                standardTickets++;
+                                break;
+                        }
+                        
+                        //Total cost when all have entered their ages
+                        if (i == amountOfPeople - 1)
+                        {
+                            string stringJuniorTickets = "";
+                            string stringStandardTickets = "";
+                            string stringSeniorTickets = "";
+
+                            if(juniorTickets > 0)
+                                stringJuniorTickets = $"{juniorTickets} Junior Ticket(s).";
+                            if (standardTickets > 0)
+                                stringStandardTickets = $"{standardTickets} Standard Tickets(s).";
+                            if (seniorTickets > 0)
+                                stringSeniorTickets = $"{seniorTickets} Senior Ticket(s).";
+
+                            Console.WriteLine($"{totalCost} kr for {amountOfPeople} ticket(s). {stringJuniorTickets} {stringStandardTickets} {stringSeniorTickets}\nEnjoy the movie!");
+                        }
+                    }
                 }
+                //If input is not a number, force the user to write new input
                 else
                 {
                     Console.WriteLine("Invalid input!");
                     continue;
                 }
-                
             } while (notSuccessful);
         }
 
-        public static int CinemaOnePersonCost()
+        public static int SingleTicket()
         {
-            
             bool notSuccessful = true;
             int cost;
             string input;
             do
             {
                 Console.WriteLine("Enter an age: ");
-                input = Console.ReadLine();
+                input = Console.ReadLine()!;
 
+                //Check if input is a number
                 if (int.TryParse(input, out int age))
                 {
-                    age = int.Parse(input);
                     notSuccessful = false;
                     if (age < 20)
                     {
