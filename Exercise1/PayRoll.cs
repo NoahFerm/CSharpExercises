@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercise1
 {
-    public class PayRoll
+    public class PayRoll : IPayRoll
     {
         private List<Employee> payRoll;
 
@@ -20,7 +20,7 @@ namespace Exercise1
             Employee employee = new Employee(name, salary);
             payRoll.Add(employee);
         }
-        internal void AddEmployee(Employee employee)
+        public void AddEmployee(Employee employee)
         {
             payRoll.Add(employee);
         }

@@ -12,7 +12,7 @@ namespace Exercise1
         //    set { name = value; }
         //}
          
-        public string Name { get; set; }
+        public string Name { get; }
         public uint Salary { get; }
 
         public SalaryLevel SalaryLevel => Salary < 25000 ? SalaryLevel.Junior : SalaryLevel.Senior;
