@@ -24,8 +24,9 @@ namespace Exercise2
                         TotalCostTickets();
                         break;
                     case "2":
+                        RepeatTenTimes();
                         break;
-                    case "3":
+                    case "3": 
                         break;
                     default:
                         Console.WriteLine("Invalid Input");
@@ -36,12 +37,24 @@ namespace Exercise2
             } while (showMenu);
         }
 
+        private static void RepeatTenTimes()
+        {
+            Console.WriteLine("Write something: ");
+            string input = Console.ReadLine()!;
+
+            for (int i = 0; i < 11; i++)
+            {
+                Console.Write($"{i + 1}. {input} ");
+            }
+            Console.WriteLine();
+        }
+
         private static void TotalCostTickets()
         {
             bool notSuccessful = true;
             string inputAmountOfPeople;
             int totalCost = 0;
-            int price = 0;
+            int price;
             int juniorTickets = 0;
             int standardTickets = 0;
             int seniorTickets = 0;
