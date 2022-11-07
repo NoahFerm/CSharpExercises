@@ -26,7 +26,8 @@ namespace Exercise2
                     case "2":
                         RepeatTenTimes();
                         break;
-                    case "3": 
+                    case "3":
+                        TheThirdWord();
                         break;
                     default:
                         Console.WriteLine("Invalid Input");
@@ -37,14 +38,37 @@ namespace Exercise2
             } while (showMenu);
         }
 
+        private static void TheThirdWord()
+        {
+            bool notSuccessful = true;
+
+            do
+            {
+                Console.WriteLine("Write a sentence (at least 3 words): ");
+                var input = Console.ReadLine()!;
+                string[] splitString = input.Split(" ");
+                
+                if (splitString.Length > 2)
+                {
+                    notSuccessful = false;
+                    Console.WriteLine($"The third word is: {splitString[2]}");
+                }
+                else
+                {
+                    Console.WriteLine("A longer sentence please.");
+                    continue;
+                }
+            } while (notSuccessful);
+        }
+
         private static void RepeatTenTimes()
         {
             Console.WriteLine("Write something: ");
             string input = Console.ReadLine()!;
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 10; i++)
             {
-                Console.Write($"{i + 1}. {input} ");
+                Console.Write($"Repeated 10 times: {i + 1}. {input}\t");
             }
             Console.WriteLine();
         }
@@ -58,6 +82,7 @@ namespace Exercise2
             int juniorTickets = 0;
             int standardTickets = 0;
             int seniorTickets = 0;
+            int freeTickets = 0;
             
             do
             {
@@ -68,7 +93,10 @@ namespace Exercise2
                 if (int.TryParse(inputAmountOfPeople, out int amountOfPeople))
                 {
                     notSuccessful = false;
-
+                    if(amountOfPeople < 1)
+                    {
+                        Console.WriteLine("Go away.");
+                    }
                     //Repeat loop for every person to calculate and add all their costs
                     for (int i = 0; i < amountOfPeople; i++)
                     {
@@ -83,6 +111,9 @@ namespace Exercise2
                             case 90:
                                 seniorTickets++;
                                 break;
+                            case 0:
+                                freeTickets++;
+                                break;
                             default:
                                 standardTickets++;
                                 break;
@@ -94,15 +125,26 @@ namespace Exercise2
                             string stringJuniorTickets = "";
                             string stringStandardTickets = "";
                             string stringSeniorTickets = "";
+                            string stringFreeTickets = "";
 
-                            if(juniorTickets > 0)
-                                stringJuniorTickets = $"{juniorTickets} Junior Ticket(s).";
-                            if (standardTickets > 0)
-                                stringStandardTickets = $"{standardTickets} Standard Tickets(s).";
-                            if (seniorTickets > 0)
-                                stringSeniorTickets = $"{seniorTickets} Senior Ticket(s).";
+                            if (juniorTickets > 1)
+                                stringJuniorTickets = $"{juniorTickets} Junior Tickets.";
+                            if (juniorTickets == 1)
+                                stringJuniorTickets = $"{juniorTickets} Junior Ticket.";
+                            if (standardTickets > 1)
+                                stringStandardTickets = $"{standardTickets} Standard Tickets.";
+                            if (standardTickets == 1)
+                                stringStandardTickets = $"{standardTickets} Standard Ticket.";
+                            if (seniorTickets > 1)
+                                stringSeniorTickets = $"{seniorTickets} Senior Tickets.";
+                            if (seniorTickets == 1)
+                                stringSeniorTickets = $"{seniorTickets} Senior Ticket.";
+                            if (freeTickets > 1)
+                                stringFreeTickets = $"{freeTickets} Free Tickets.";
+                            if (freeTickets == 1)
+                                stringFreeTickets = $"{freeTickets} Free Ticket.";
 
-                            Console.WriteLine($"{totalCost} kr for {amountOfPeople} ticket(s). {stringJuniorTickets} {stringStandardTickets} {stringSeniorTickets}\nEnjoy the movie!");
+                            Console.WriteLine($"{totalCost} kr for {amountOfPeople} ticket(s). {stringJuniorTickets} {stringStandardTickets} {stringSeniorTickets} {stringFreeTickets}\nEnjoy the movie!");
                         }
                     }
                 }
@@ -129,16 +171,28 @@ namespace Exercise2
                 if (int.TryParse(input, out int age))
                 {
                     notSuccessful = false;
-                    if (age < 20)
+                    if (age < 20 && age >= 5)
                     {
                         cost = 80;
                         Console.WriteLine($"Adolescent price: {cost} kr");
                         return cost;
                     }
-                    else if (age > 64)
+                    else if (age > 64 && age < 100)
                     {
                         cost = 90;
                         Console.WriteLine($"Pensioner price: {cost} kr");
+                        return cost;
+                    }
+                    else if (age >= 100)
+                    {
+                        cost = 0;
+                        Console.WriteLine($"Your ticket is free!");
+                        return cost;
+                    }
+                    else if (age < 5)
+                    {
+                        cost = 0;
+                        Console.WriteLine($"Your ticket is free!");
                         return cost;
                     }
                     else
