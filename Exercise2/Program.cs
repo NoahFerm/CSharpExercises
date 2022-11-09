@@ -46,7 +46,7 @@ namespace Exercise2
             {
                 Console.WriteLine("Write a sentence (at least 3 words): ");
                 var input = Console.ReadLine()!;
-                string[] splitString = input.Split(" ");
+                string[] splitString = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
                 
                 if (splitString.Length > 2)
                 {
