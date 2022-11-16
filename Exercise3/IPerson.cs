@@ -8,9 +8,7 @@ namespace Exercise3
 {
     public interface IPerson
     {
-        public void Talk()
-        {
-
-        }
+        string Talk();
+        
     }
 }

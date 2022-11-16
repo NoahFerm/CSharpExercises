@@ -21,5 +21,11 @@ namespace Exercise3.Animals
         {
             return "Noot noot!";
         }
+
+        public override string Stats()
+        {
+            return base.Stats() + $"Is Pingu? {IsPingu}";
+        }
     }
 }
+

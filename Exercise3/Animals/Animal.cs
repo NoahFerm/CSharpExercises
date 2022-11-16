@@ -37,5 +37,10 @@ namespace Exercise3
             Age = age;
             Weight = weight;
         }
+
+        public virtual string Stats()
+        {
+            return $"Species {this.GetType().Name}, Name: {Name}, Age: {Age}, Weight: {Weight}, ";
+        }
     }
 }

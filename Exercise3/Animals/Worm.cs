@@ -21,5 +21,9 @@ namespace Exercise3.Animals
         {
             return "Sad worm noises";
         }
+        public override string Stats()
+        {
+            return base.Stats() + $"Is on fishing hook? {IsOnFishingHook}";
+        }
     }
 }

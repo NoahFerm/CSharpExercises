@@ -8,8 +8,9 @@ namespace Exercise3.Animals
 {
     internal class Wolfman : Wolf, IPerson
     {
-
-        public Wolfman(string name, int age, int weight, bool sharpFangs) : base(name, age, weight, sharpFangs)
+        private bool supernaturalStrength;
+        public bool SupernaturalStrength { get { return supernaturalStrength; } set { supernaturalStrength = value; } }
+        public Wolfman(string name, int age, int weight, bool sharpFangs, bool supernaturalStrength) : base(name, age, weight, sharpFangs)
         {
         }
 
@@ -18,6 +19,12 @@ namespace Exercise3.Animals
         {
             return "I'm a werewolf";
         }
-        
+
+        public override string Stats()
+        {
+            return base.Stats() + $", Supernatural strength? {SupernaturalStrength}";
+        }
     }
+
 }
+

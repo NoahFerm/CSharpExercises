@@ -20,47 +20,30 @@ internal class Program
             PersonHandler.SetAge(noah3, 40);
             Console.WriteLine(noah3.DisplayPerson());
 
+            var animalFarm = new List<Animal>();
+            
+            animalFarm.Add(new Horse("Raven", 10, 300, 85));
+            animalFarm.Add(new Dog("Hero", 5, 30, "Golden retriever"));
+            animalFarm.Add(new Hedgehog("Sonic", 1, 0, true));
+            animalFarm.Add(new Worm("Jim", 0, 0, true));
+            animalFarm.Add(new Bird("Rex", 0, 0, true));
+            animalFarm.Add(new Wolf("Knight", 0, 0, true));
+            animalFarm.Add(new Penguin("Pingu", 0, 0, false, true));
+            animalFarm.Add(new Wolfman("Zev", 0, 0, true, true));
 
 
+            foreach (var animal in animalFarm)
+            {
+                Console.WriteLine(animal.Stats());
+                Console.WriteLine(animal.DoSound());
+                if(animal is IPerson)
+                {
+                    var temp = animal as IPerson;
+                    Console.WriteLine(temp.Talk());
+                }
 
-
-            Horse horse = new Horse("Raven", 10, 300, 85);
-            Dog dog = new Dog("Hero", 5, 30, "Golden retriever");
-            Hedgehog hedgehog = new Hedgehog("Sonic", 1, 0, true);
-            Worm worm = new Worm("Jim", 0, 0, true);
-            Bird bird = new Bird("Rex", 0, 0, true);
-            Wolf wolf = new Wolf("Knight", 0, 0, true);
-            Penguin penguin = new Penguin("Pingu", 0, 0, false, true);
-            Wolfman wolfman = new Wolfman("Zev", 0, 0, true);
-
-            Console.WriteLine($"Horse: {horse.Name}");
-            Console.WriteLine($"Speed: {horse.Speed} km/h");
-            Console.WriteLine(horse.DoSound());
-
-            Console.WriteLine($"Dog: {dog.Name}");
-            Console.WriteLine($"Breed: {dog.Breed}");
-            Console.WriteLine(dog.DoSound());
-
-            Console.WriteLine($"Hedgehog: {hedgehog.Name}");
-            Console.WriteLine($"Is cute: {hedgehog.IsCute}");
-            Console.WriteLine(hedgehog.DoSound());
-
-            Console.WriteLine($"Worm: {worm.Name}");
-            Console.WriteLine($"Is on a fishing hook: {worm.IsOnFishingHook}");
-            Console.WriteLine(worm.DoSound());
-
-            Console.WriteLine($"Penguin: {penguin.Name}");
-            Console.WriteLine($"It's Pingu? {penguin.IsPingu}");
-            Console.WriteLine(penguin.DoSound());
-
-            Console.WriteLine($"Wolf: {wolf.Name}");
-            Console.WriteLine($"Sharp fangs? {wolf.SharpFangs}");
-            Console.WriteLine(wolf.DoSound());
-
-            Console.WriteLine($"Wolfman: {wolfman.Name}");
-            Console.WriteLine($"Sharp fangs? {wolfman.SharpFangs}");
-            Console.WriteLine(wolfman.DoSound());
-            Console.WriteLine(wolfman.Talk());
+                Console.WriteLine();
+            }
 
 
 

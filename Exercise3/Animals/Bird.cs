@@ -21,5 +21,10 @@ namespace Exercise3.Animals
         {
             return "Chirp!";
         }
+
+        public override string Stats()
+        {
+            return base.Stats() + $"Can fly? {CanFly}";
+        }
     }
 }

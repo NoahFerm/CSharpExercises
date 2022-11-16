@@ -21,5 +21,10 @@ namespace Exercise3.Animals
         {
             return "Neeeeeeigh!";
         }
+        public override string Stats()
+        {
+            return base.Stats() + $"Speed: {Speed}";
+        }
     }
 }
+
