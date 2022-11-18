@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Diagnostics;
 
 /*
  Question 1. How does the stack and heap work?
@@ -56,7 +58,7 @@ namespace Exercise4
 
             while (true)
             {
-                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3, 4, 0) of your choice"
+                Console.WriteLine("\n\nPlease navigate through the menu by inputting the number \n(1, 2, 3, 4, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
@@ -114,20 +116,22 @@ namespace Exercise4
              * As a default case, tell them to use only + or -
              * Below you can see some inspirational code to begin working.
             */
-            
+
+            //Capacity fördubblas varje gång Count == Capacity
+            //Det slösar nog inte mycket minne av att duplicera med 2 jämfört med att plussa på en
+            //capacity för varje gång det blir fullt
+            //Capacity minskar inte när man tar bort items i listan
+            //Om man ska lägga till och ta bort mycket så är det enklast att använda lista, och den
+            //har mer funktionalitet
+            //Arrays har också en förbestämd size, medans lista är mer flexibel
+            //Arrays används mycket vid string hantering
+
             bool running = true;
             List<string> theList = new List<string>();
             while (running)
             {
-                Console.WriteLine($"Press Q to quit.\nThe list({theList.Count}, {theList.Capacity}):");
-                //Capacity fördubblas varje gång Count == Capacity
-                //Det slösar nog inte mycket minne av att duplicera med 2 jämfört med att plussa på en
-                //i capacity för varje gång det blir fullt
-                //Capacity minskar inte när man tar bort items i listan
-                //Om man ska lägga till och ta bort mycket så är det enklast att använda lista, och den
-                //har mer funktionalitet
-                //Arrays har också en förbestämd size, medans lista är mer flexibel
-                //Arrays används mycket vid string hantering
+                Console.WriteLine($"\n\n0 to quit.\n+(value) to add.\n-(value) to remove.\nThe list({theList.Count}, {theList.Capacity}):");
+                //Prints the list
                 foreach (var item in theList)
                 {
                     Console.WriteLine(item);
@@ -138,9 +142,11 @@ namespace Exercise4
                 switch (nav)
                 {
                     case '+':
+                        //Adds the input to the list
                         theList.Add(value);
                         break;
                     case '-':
+                        //Removes the input from the list
                         theList.Remove(value);
                         break;
                     case '0':
@@ -166,6 +172,34 @@ namespace Exercise4
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+            bool running = true;
+            Queue theQueue = new Queue();
+            while (running)
+            {
+                Console.WriteLine($"\n\n0 to quit.\n+(value) to add.\n- to remove.\nThe queue({theQueue.Count}):");
+                //Prints the queue
+                foreach (var item in theQueue)
+                {
+                    Console.WriteLine(item);
+                }
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+                switch (nav)
+                {
+                    case '+':
+                        //Adds the input to the queue
+                        theQueue.Enqueue(value);
+                        break;
+                    case '-':
+                        //Removes the first item in the queue
+                        theQueue.Dequeue();
+                        break;
+                    case '0':
+                        running = false;
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -178,6 +212,38 @@ namespace Exercise4
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+            //ICA kön är inte bra med en stack för att så länge det kommer nya i kön så kommer de
+            //som kom innan behöva vänta tills de som kom efter har gått innan de kan gå själva.
+            bool running = true;
+            Stack theStack = new Stack();
+            while (running)
+            {
+                Console.WriteLine($"\n\n0 to quit.\n+(value) to add.\n- to remove.\nThe stack({theStack.Count}):");
+                //Prints the stack
+                foreach (var item in theStack)
+                {
+                    Console.WriteLine(item);
+                }
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+                switch (nav)
+                {
+                    case '+':
+                        string reversedValue = ReverseText(value);
+                        //Adds the input to the stack
+                        theStack.Push(reversedValue);
+                        break;
+                    case '-':
+                        //Removes the latest item in the stack
+                        theStack.Pop();
+                        break;
+                    case '0':
+                        running = false;
+                        break;
+                }
+            }
         }
 
         static void CheckParanthesis()
@@ -187,7 +253,125 @@ namespace Exercise4
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+            //bool running = true;
+            //Creates a stack
+            Stack<char> stack = new Stack<char>();
+            //while (running)
+            //{
+                Console.WriteLine($"0 to quit.\nEnter parathensises: ");
+                string input = Console.ReadLine();
+                //If you input 0, quit the method, otherwise continue I want to keep
+                //running the method until the user inputs 0, but I'll return to that
+                switch (input)
+                {
+                    case "0":
+                        //running = false;
+                        return;
+                }
+                //Loops until it has either decided it's incorrect or it has gone through
+                //all characters without finding any problems
+                for (int i = 0; i < input.Length; i++)
+                {
+                    //makes a char out of the first character of the input
+                    char character = input[i];
+                    //If char is an opening paranthesis, adds it to the stack
+                    if (character == '(' || character == '{' || character == '[')
+                    {
+                        stack.Push(character);
+                    }
+                    //If its a closing paranthesis...
+                    else if (character == ')' || character == '}' || character == ']')
+                    {
+                        //..and the stack is empty, there are no opening tags that needs closing,
+                        //and therefore it's incorrect
+                        if (stack.Any() == false)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Paranthesis is incorrect");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            return; 
+                        }
+                        //If the character is a closing paranthesis and the stack has any opening
+                        //paranthesis
+                        else
+                        {
+                            switch (character)
+                            {
+                                //Checks if the closing paranthesis matches the latest opening
+                                //paranthesis. If it doesn't match it's incorrect. Ex. (]
+                                case ')':
+                                    if (stack.Pop() != '(')
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("Paranthesis is incorrect");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        return;
+                                    } 
+                                    break;
+                                case '}':
+                                    if(stack.Pop() != '{')
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("Paranthesis is incorrect");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        return;
+                                    }
+                                    break;
+                                case ']':
+                                    if(stack.Pop() != '[')
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("Paranthesis is incorrect");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        return;
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+                //If there are no paranthesis in the stack it means they were
+                //all matched with a closing paranthesis, therefore correct
+                if (!stack.Any())
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Paranthesis is correct");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return;
+                }
+                //If there are still paranthesis in the stack, it means some
+                //weren't closed and therefore its incorrect
+                else if (stack.Any())
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Paranthesis is incorrect");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return;
+                }
+                //This will only run of none of the paths are run
+                Console.WriteLine("Invalid input. Please enter paranthesis");
+            //}
+        }
+        static string ReverseText(string value)
+        {
+            Stack stack = new Stack();
+            string reversed = "";
+            
+            for (int i = 0; i < value.Length; i++)
+            {
+                stack.Push(value[i]);
+            }
+            while(stack.Count > 0)
+            {
+                reversed += stack.Pop().ToString();
+            }
 
+            //Reverses too
+            //foreach (var item in stack)
+            //{
+            //    reversed += item;
+            //}
+            return reversed;
         }
 
     }
