@@ -8,34 +8,52 @@ namespace Exercise5
 {
     internal class Handler
     {
-        
+        private readonly Garage<Vehicle> garage;
 
+        public Handler(int capacity)
+        {
+
+            garage = new Garage<Vehicle>(capacity);
+        }
+
+        
         //garage.Add(car);
         //garage.Add(airplane);
         //garage.Add(airplane2);
 
         //GaragePrinter(garage);
         //Console.ReadLine();
-
-        public void GaragePrinter(Garage<Vehicle> array)
+        public bool Test(Vehicle v)
         {
-            foreach (Vehicle vehicle in array)
-            {
-                if (vehicle != null)
-                    Console.WriteLine(vehicle.DisplayInfo());
-            }
+            return v.Color == "Red";
+        }
+
+        public IEnumerable<string> GaragePrinter()
+        {
+            return garage//.Where(v => v.Color == "Red")
+                .Select(v => v.DisplayInfo());
+
+
+
+            //var res2 = garage.Where(v => Test(v));
+            //var res3 = garage.Where(Test);
+            //foreach (Vehicle vehicle in garage)
+            //{
+            //  //  if (vehicle != null)
+            //        Console.WriteLine(vehicle.DisplayInfo());
+            //}
         }
         public Garage<Vehicle> CreateGarage(int capacity)
         {
             Garage<Vehicle> garage = new Garage<Vehicle>(capacity);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("New garage created!");
+            Console.ForegroundColor = ConsoleColor.White;
             return garage;
         }
-        public void SeedData()
-        {
-            Console.WriteLine("You need to create a garage first!");
-        }
+   
 
-        public Garage<Vehicle> SeedData(Garage<Vehicle> garage)
+        public void SeedData()
         {
             Vehicle airplane = new Airplane("abc123", "white", 3);
             Vehicle airplane2 = new Airplane("bbc123", "gray", 3);
@@ -43,8 +61,11 @@ namespace Exercise5
             garage.Add(airplane);
             garage.Add(airplane2);
             garage.Add(car);
-            return garage;
         }
 
+        internal bool Park(Vehicle car)
+        {
+           return garage.Add(car);
+        }
     }
 }

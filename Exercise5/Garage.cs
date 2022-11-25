@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Exercise5
 {
-    internal class Garage<T> : IEnumerable<T>
+    internal class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private int Capacity { get; set; }
         private T[] garage;
@@ -19,23 +19,30 @@ namespace Exercise5
 
         public virtual bool Add(T vehicle)
         {
-            for(int i = 0; i < garage.Length; i++)
+            for (int i = 0; i < garage.Length; i++)
             {
                 if (garage[i] == null)
                 {
-                    garage[i] = vehicle; return true;
+                    garage[i] = vehicle;
+                    Console.WriteLine($"Successfully parked {vehicle?.GetType().Name}");
+                    return true;
                 }
             }
             Console.WriteLine("Garage is full");
             return false;
-            
+        }
+        public virtual void Remove(/*IEnumerable<T> garage, T vehicle*/)
+        {
+
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach(var vehicle in garage)
+            foreach (var vehicle in garage)
             {
-                yield return vehicle;
+                //..
+                if (vehicle is not null)
+                    yield return vehicle;
             }
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
