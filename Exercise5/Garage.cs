@@ -24,17 +24,19 @@ namespace Exercise5
                 if (garage[i] == null)
                 {
                     garage[i] = vehicle;
-                    Console.WriteLine($"Successfully parked {vehicle?.GetType().Name}");
                     return true;
                 }
             }
             Console.WriteLine("Garage is full");
             return false;
         }
-        public virtual void Remove(/*IEnumerable<T> garage, T vehicle*/)
-        {
-
-        }
+        //public virtual bool Remove(string reg)
+        //{
+        //    if (!garage.Any())
+        //        Console.WriteLine("Garage is empty");
+        //    garage.Where(v => v.RegNumber == reg)
+        //        .Select(v => v.DisplayInfo());
+        //}
 
         public IEnumerator<T> GetEnumerator()
         {

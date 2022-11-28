@@ -27,40 +27,92 @@ namespace Exercise5
         {
             runApp = true;
             string input;
+            IEnumerable<string> stringsToPrint;
          //   Garage<Vehicle> garage;
 
             Console.WriteLine("Welcome to the Garage App!");
             do
             {
-                input = ui.DisplayMenu();
-
-                switch (input)
+                switch (ui.DisplayMenu())
                 {
                     case "0":
                         runApp = false;
                         break;
                     case "1":
-                        //garage = handler.CreateGarage(10);
-                        //handler.SeedData(garage);
-                        //if (handler.IsGarageFull)
-                        //{
-
-                        //}
-                        var car = new Car("ABC123", "RED", 4);
-
-                        if (handler.Park(car))
+                        stringsToPrint = handler.GaragePrinter();
+                        foreach(string item in stringsToPrint)
                         {
-                            Console.WriteLine($"Successfully parked {car.GetType().Name}");
+                            ui.Print(item);
+                        }
+                        
+                        break;
+                    case "2":
+                        string reg;
+                        string color;
+                        int wheels;
+                        switch (ui.VehicleSelect())
+                        {
+                            case "1":
+                                Console.WriteLine("Parking a car");
+                                Console.WriteLine("Enter reg number: ");
+                                reg = ui.Input();
+                                Console.WriteLine("Enter color: ");
+                                color = ui.Input();
+                                Console.WriteLine("Enter number of wheels: ");
+                                if (int.TryParse(ui.Input(), out wheels)) { }
+                                else
+                                {
+                                    ui.Fail();
+                                    break;
+                                }
+                                if (handler.RegisterVehicle("car", reg, color, wheels))
+                                    ui.Success();
+                                else
+                                    ui.Fail();
+                                
+                                break;
+                            case "2":
+                                Console.WriteLine("Parking a motorcycle");
+                                Console.WriteLine("Enter reg number: ");
+                                reg = ui.Input();
+                                Console.WriteLine("Enter color: ");
+                                color = ui.Input();
+                                Console.WriteLine("Enter number of wheels: ");
+                                if (int.TryParse(ui.Input(), out wheels)) { }
+                                else
+                                {
+                                    ui.Fail();
+                                    break;
+                                }
+                                
+                                if (handler.RegisterVehicle("motorcycle", reg, color, wheels))
+                                    ui.Success();
+                                else
+                                    ui.Fail();
+                                break;
+                            default:
+                                break;
                         }
                         break;
-                    //case "2":
-                    //    handler.GaragePrinter(garage);
-                    //    break;
+                    case "3":
+                        stringsToPrint = handler.GaragePrinter();
+                        foreach (string item in stringsToPrint)
+                        {
+                            ui.Print(item);
+                        }
+                        Console.WriteLine("Unpark vehicle");
+                        Console.WriteLine("Enter reg number: ");
+                        string parked = ui.Input();
+                        //handler.Unpark(parked);
+                        break;
+                    case "4":
+                        if (handler.SeedData())
+                        {
+                            ui.Success();
+                        }
+                        else { ui.Fail(); }
+                        break;
                     default:
-                      //  garage = handler.CreateGarage(10);
-                        handler.SeedData();
-                       IEnumerable<string> stringsToPrint = handler.GaragePrinter();
-                        //Print strings
                         break;
 
                 }

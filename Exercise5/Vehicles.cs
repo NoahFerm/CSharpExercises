@@ -28,8 +28,8 @@ namespace Exercise5
     {
         public Car(string registerNumber, string color, int numberOfWheels) : base(registerNumber, color, numberOfWheels) { }
     }
-    internal class Airplane : Vehicle
+    internal class Motorcycle : Vehicle
     {
-        public Airplane(string registerNumber, string color, int numberOfWheels) : base(registerNumber, color, numberOfWheels) { }
+        public Motorcycle(string registerNumber, string color, int numberOfWheels) : base(registerNumber, color, numberOfWheels) { }
     }
 }
