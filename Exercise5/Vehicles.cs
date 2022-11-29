@@ -21,7 +21,7 @@ namespace Exercise5
 
         public virtual string DisplayInfo()
         {
-            return $"Vehicle: {this.GetType().Name}\tID: {RegNumber}\tColor: {Color}\tNumber of wheels: {NumberOfWheels}";
+            return $"Vehicle: {this.GetType().Name}\tReg: {RegNumber}\tColor: {Color}\tNumber of wheels: {NumberOfWheels}";
         }
     }
     internal class Car : Vehicle
@@ -32,4 +32,5 @@ namespace Exercise5
     {
         public Motorcycle(string registerNumber, string color, int numberOfWheels) : base(registerNumber, color, numberOfWheels) { }
     }
+    
 }

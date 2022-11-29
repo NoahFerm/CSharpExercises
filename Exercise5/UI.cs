@@ -10,10 +10,11 @@
             {
                 Console.WriteLine("Choose one of the following:");
                 Console.WriteLine("1) Display vehicles");
-                Console.WriteLine("2) Park vehicle");
-                Console.WriteLine("3) Remove vehicles");
-                Console.WriteLine("4) Insert pre-made vehicles");
-                //Console.WriteLine("5) Create new garage");
+                Console.WriteLine("2) Search vehicle");
+                Console.WriteLine("3) Park vehicle");
+                Console.WriteLine("4) Unpark vehicles");
+                Console.WriteLine("5) Insert pre-made vehicles");
+                //Console.WriteLine("6) Create new garage");
                 Console.WriteLine("0) Quit");
                 input = Console.ReadLine()!;
                 if (input.Length > 0 )
@@ -29,6 +30,13 @@
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Please enter a number");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    else if (int.Parse(input) > 5)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Please choose one of the alternatives");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }

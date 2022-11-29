@@ -32,18 +32,19 @@ namespace Exercise5
         {
             if(!garage.Any())
                 Console.WriteLine("Garage is empty");
-            return garage//.Where(v => v.Color == "Red")
+            return garage
                 .Select(v => v.DisplayInfo());
-
-            
-
-            //var res2 = garage.Where(v => Test(v));
-            //var res3 = garage.Where(Test);
-            //foreach (Vehicle vehicle in garage)
-            //{
-            //  //  if (vehicle != null)
-            //        Console.WriteLine(vehicle.DisplayInfo());
-            //}
+        }
+        public IEnumerable<string>? GaragePrinter(string value)
+        {
+            if (!garage.Any())
+            {
+                Console.WriteLine("Garage is empty");
+                return garage.Select(v => v.DisplayInfo());
+            }
+                
+            return garage.Where(v => v.Color.ToLower() == "red" || v.RegNumber.ToLower() == value || v.GetType().Name == value || v.NumberOfWheels.ToString() == value)
+                .Select(v => v.DisplayInfo());
         }
         //public Garage<Vehicle> CreateGarage(int capacity)
         //{
@@ -53,12 +54,12 @@ namespace Exercise5
         //    Console.ForegroundColor = ConsoleColor.White;
         //    return garage;
         //}
-   
+
 
         public bool SeedData()
         {
             Vehicle motorcycle = new Motorcycle("abc123", "white", 2);
-            Vehicle motorcycle2 = new Motorcycle("bbc123", "gray", 2);
+            Vehicle motorcycle2 = new Motorcycle("red", "gray", 2);
             Vehicle car = new Car("cbc123", "red", 4);
             if (garage.Add(motorcycle) == false) { return false; }
             if (garage.Add(motorcycle2) == false) { return false; }
@@ -85,9 +86,10 @@ namespace Exercise5
             return false;
         }
 
-        //internal bool Unpark(string parked)
+        //internal bool Unpark(string value)
         //{
-        //    return garage.Remove(parked);
+        //    garage.Where(v =>  v.RegNumber.ToLower() == value).Select(v => v = new EmptyVehicle());
+
         //}
     }
 }
