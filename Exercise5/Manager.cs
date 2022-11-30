@@ -60,7 +60,7 @@ namespace Exercise5
 
                         break;
                     case "3": //Park vehicle
-                        if (handler.IsFull() == false)
+                        if (handler.GarageIsFull() == false)
                         {
                             string reg;
                             string color;
@@ -128,7 +128,7 @@ namespace Exercise5
                         //handler.Unpark(parked);
                         break;
                     case "5": //Insert pre-made vehicles
-                        if (handler.IsFull() == false)
+                        if (handler.GarageIsFull() == false)
                         {
                             if (handler.SeedData())
                             {

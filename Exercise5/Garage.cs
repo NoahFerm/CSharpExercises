@@ -9,8 +9,8 @@ namespace Exercise5
 {
     internal class Garage<T> : IEnumerable<T> where T : Vehicle
     {
-        public int Capacity { get; set; }
-        public int Count { get; set; }
+        private int Capacity { get; set; }
+        private int Count { get; set; }
         private T[] garage;
         public Garage(int capacity)
         {
@@ -50,5 +50,12 @@ namespace Exercise5
             }
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        internal bool IsFull()
+        {
+            if (Count < Capacity)
+                return false;
+            else return true;
+        }
     }
 }
