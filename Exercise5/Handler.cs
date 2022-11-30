@@ -69,7 +69,13 @@ namespace Exercise5
 
         internal bool Park(Vehicle vehicle)
         {
-           return garage.Add(vehicle);
+                return garage.Add(vehicle);
+        }
+        internal bool IsFull()
+        {
+            if (garage.Count < garage.Capacity)
+                return false;
+            else return true;
         }
 
         internal bool RegisterVehicle(string type, string reg, string color, int wheels)

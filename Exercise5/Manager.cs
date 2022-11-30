@@ -10,9 +10,13 @@ namespace Exercise5
     internal class Manager
     {
         private Handler handler = null!;
-        private readonly UI ui = new UI();
+        private readonly UI ui;
         private bool runApp;
         
+        public Manager(UI ui)
+        {
+            this.ui = ui;
+        }
 
         internal void Start()
         {
@@ -56,50 +60,56 @@ namespace Exercise5
 
                         break;
                     case "3": //Park vehicle
-                        string reg;
-                        string color;
-                        int wheels;
-                        switch (ui.VehicleSelect())
+                        if (handler.IsFull() == false)
                         {
-                            case "1": //Park car
-                                Console.WriteLine("Parking a car");
-                                Console.WriteLine("Enter reg number: ");
-                                reg = ui.Input();
-                                Console.WriteLine("Enter color: ");
-                                color = ui.Input();
-                                Console.WriteLine("Enter number of wheels: ");
-                                if (int.TryParse(ui.Input(), out wheels)) { }
-                                else
-                                {
-                                    ui.Fail();
+                            string reg;
+                            string color;
+                            int wheels;
+                            switch (ui.VehicleSelect())
+                            {
+                                case "1": //Park car
+                                    Console.WriteLine("Parking a car");
+                                    Console.WriteLine("Enter reg number: ");
+                                    reg = ui.Input();
+                                    Console.WriteLine("Enter color: ");
+                                    color = ui.Input();
+                                    Console.WriteLine("Enter number of wheels: ");
+                                    if (int.TryParse(ui.Input(), out wheels)) { }
+                                    else
+                                    {
+                                        ui.Fail();
+                                        break;
+                                    }
+                                    if (handler.RegisterVehicle("car", reg, color, wheels))
+                                        ui.Success();
+                                    else
+                                        ui.Fail();
                                     break;
-                                }
-                                if (handler.RegisterVehicle("car", reg, color, wheels))
-                                    ui.Success();
-                                else
-                                    ui.Fail();
-                                break;
-                            case "2": //Park motorcycle
-                                Console.WriteLine("Parking a motorcycle");
-                                Console.WriteLine("Enter reg number: ");
-                                reg = ui.Input();
-                                Console.WriteLine("Enter color: ");
-                                color = ui.Input();
-                                Console.WriteLine("Enter number of wheels: ");
-                                if (int.TryParse(ui.Input(), out wheels)) { }
-                                else
-                                {
-                                    ui.Fail();
+                                case "2": //Park motorcycle
+                                    Console.WriteLine("Parking a motorcycle");
+                                    Console.WriteLine("Enter reg number: ");
+                                    reg = ui.Input();
+                                    Console.WriteLine("Enter color: ");
+                                    color = ui.Input();
+                                    Console.WriteLine("Enter number of wheels: ");
+                                    if (int.TryParse(ui.Input(), out wheels)) { }
+                                    else
+                                    {
+                                        ui.Fail();
+                                        break;
+                                    }
+                                    if (handler.RegisterVehicle("motorcycle", reg, color, wheels))
+                                        ui.Success();
+                                    else
+                                        ui.Fail();
                                     break;
-                                }
-                                if (handler.RegisterVehicle("motorcycle", reg, color, wheels))
-                                    ui.Success();
-                                else
-                                    ui.Fail();
-                                break;
-                            default:
-                                break;
+                                default:
+                                    break;
+                            }
+
+
                         }
+                        else ui.Print("Garage is full");
                         break;
                     case "4": //Unpark vehicle
                         stringsToPrint = handler.GaragePrinter();
@@ -118,11 +128,15 @@ namespace Exercise5
                         //handler.Unpark(parked);
                         break;
                     case "5": //Insert pre-made vehicles
-                        if (handler.SeedData())
+                        if (handler.IsFull() == false)
                         {
-                            ui.Success();
+                            if (handler.SeedData())
+                            {
+                                ui.Success();
+                            }
+                            else { ui.Fail(); }
                         }
-                        else { ui.Fail(); }
+                        else ui.Print("Garage is full");
                         break;
                     default:
                         break;

@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            var app = new Manager();
+            var ui = new UI();
+            var app = new Manager(ui);
             app.Start();
             
         }

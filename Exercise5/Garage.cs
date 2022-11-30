@@ -9,7 +9,8 @@ namespace Exercise5
 {
     internal class Garage<T> : IEnumerable<T> where T : Vehicle
     {
-        private int Capacity { get; set; }
+        public int Capacity { get; set; }
+        public int Count { get; set; }
         private T[] garage;
         public Garage(int capacity)
         {
@@ -24,10 +25,11 @@ namespace Exercise5
                 if (garage[i] == null)
                 {
                     garage[i] = vehicle;
+                    Count++;
                     return true;
                 }
             }
-            Console.WriteLine("Garage is full");
+
             return false;
         }
         //public virtual bool Remove(string reg)
